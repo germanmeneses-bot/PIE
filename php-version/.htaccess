@@ -1,0 +1,17 @@
+# Sistema PIE Escolar — Apache config
+Options -Indexes
+
+# Proteger directorio data/ (base de datos SQLite)
+<FilesMatch "\.db$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Proteger archivos de configuración
+<FilesMatch "^(config|db_setup)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Redirigir la raíz a index.php
+DirectoryIndex index.php
