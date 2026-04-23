@@ -224,7 +224,12 @@ include __DIR__ . '/includes/layout_start.php';
                                 <?= h($estadoLabel) ?>
                             </span>
                         </td>
-                        <td class="px-6 py-4">
+                         <td class="px-6 py-4 flex items-center gap-3">
+                            <button
+                                onclick="verInforme(<?= htmlspecialchars(json_encode($inf), ENT_QUOTES) ?>)"
+                                class="text-indigo-600 hover:text-indigo-700 text-xs font-medium cursor-pointer">
+                                Ver
+                            </button>
                             <form method="POST" class="inline" onsubmit="return confirm('¿Eliminar informe?')">
                                 <input type="hidden" name="_action" value="eliminar">
                                 <input type="hidden" name="id" value="<?= $inf['id'] ?>">
@@ -361,5 +366,183 @@ function abrirModalConTipo(tipo) {
 <?php if ($error || (isset($_GET['action']) && $_GET['action'] === 'nuevo')): ?>
 <script>document.getElementById('modal-informe').classList.remove('hidden');</script>
 <?php endif; ?>
+
+<!-- Modal Ver Informe -->
+<div id="modal-ver" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+
+        <!-- Header del modal -->
+        <div class="px-6 py-5 border-b border-gray-100 flex items-start justify-between flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div id="ver-emoji" class="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center text-xl flex-shrink-0"></div>
+                <div>
+                    <h3 id="ver-titulo" class="text-lg font-semibold text-gray-900"></h3>
+                    <p id="ver-tipo-badge" class="mt-0.5"></p>
+                </div>
+            </div>
+            <button onclick="document.getElementById('modal-ver').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600 cursor-pointer flex-shrink-0 ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Cuerpo -->
+        <div class="p-6 overflow-y-auto flex-1 space-y-6">
+
+            <!-- Datos principales -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-500 mb-1">Alumno</p>
+                    <p id="ver-alumno" class="text-sm font-semibold text-gray-900">—</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-500 mb-1">Fecha</p>
+                    <p id="ver-fecha" class="text-sm font-semibold text-gray-900">—</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-500 mb-1">Estado</p>
+                    <p id="ver-estado" class="text-sm font-semibold"></p>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-2">Descripción</h4>
+                <div id="ver-descripcion" class="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed min-h-[80px]"></div>
+            </div>
+
+            <!-- Metadatos -->
+            <div class="border-t border-gray-100 pt-4 flex items-center justify-between text-xs text-gray-400">
+                <span>ID de informe: <span id="ver-id" class="font-mono"></span></span>
+                <span>Registrado en Sistema PIE</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 border-t border-gray-100 flex justify-between items-center flex-shrink-0">
+            <button id="ver-btn-imprimir" onclick="imprimirInforme()"
+                    class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                </svg>
+                Imprimir
+            </button>
+            <button onclick="document.getElementById('modal-ver').classList.add('hidden')"
+                    class="px-4 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors cursor-pointer">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Mapa de emojis por tipo
+const tipoEmoji = <?= json_encode(array_map(fn($v) => $v['emoji'], $tiposInfo)) ?>;
+const tipoColor = <?= json_encode(array_map(fn($v) => $v['color'], $tiposInfo)) ?>;
+
+const estadoClases = {
+    completado: 'bg-emerald-100 text-emerald-700',
+    borrador:   'bg-amber-100 text-amber-700',
+    pendiente:  'bg-rose-100 text-rose-700',
+};
+
+const colorBg = {
+    indigo: 'bg-indigo-100', violet: 'bg-violet-100', amber: 'bg-amber-100',
+    sky: 'bg-sky-100', emerald: 'bg-emerald-100', teal: 'bg-teal-100',
+    cyan: 'bg-cyan-100', rose: 'bg-rose-100',
+};
+
+let informeActual = null;
+
+function verInforme(informe) {
+    informeActual = informe;
+
+    const tipo  = informe.tipo || '';
+    const emoji = tipoEmoji[tipo] || '📄';
+    const color = tipoColor[tipo] || 'indigo';
+
+    // Emoji e ícono
+    document.getElementById('ver-emoji').textContent = emoji;
+    document.getElementById('ver-emoji').className =
+        'w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0 ' + (colorBg[color] || 'bg-indigo-100');
+
+    // Título
+    document.getElementById('ver-titulo').textContent = informe.titulo || '—';
+
+    // Badge tipo
+    document.getElementById('ver-tipo-badge').innerHTML =
+        `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700">${tipo}</span>`;
+
+    // Alumno
+    document.getElementById('ver-alumno').textContent = informe.alumno_nombre || '—';
+
+    // Fecha (formatear de YYYY-MM-DD a DD/MM/YYYY)
+    const fecha = informe.fecha || '';
+    if (fecha && fecha.includes('-')) {
+        const [y, m, d] = fecha.split('-');
+        document.getElementById('ver-fecha').textContent = `${d}/${m}/${y}`;
+    } else {
+        document.getElementById('ver-fecha').textContent = fecha || '—';
+    }
+
+    // Estado
+    const estado = informe.estado || 'borrador';
+    const estadoCls = estadoClases[estado] || 'bg-gray-100 text-gray-600';
+    document.getElementById('ver-estado').innerHTML =
+        `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium ${estadoCls}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</span>`;
+
+    // Descripción
+    const desc = informe.descripcion || '';
+    document.getElementById('ver-descripcion').textContent = desc || 'Sin descripción registrada.';
+
+    // ID
+    document.getElementById('ver-id').textContent = '#' + (informe.id || '—');
+
+    document.getElementById('modal-ver').classList.remove('hidden');
+}
+
+function imprimirInforme() {
+    if (!informeActual) return;
+    const i = informeActual;
+    const fecha = (i.fecha || '').includes('-')
+        ? i.fecha.split('-').reverse().join('/')
+        : (i.fecha || '—');
+
+    const win = window.open('', '_blank');
+    win.document.write(`
+        <!DOCTYPE html><html lang="es"><head>
+        <meta charset="UTF-8">
+        <title>${i.titulo || 'Informe'}</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 40px; color: #1f2937; max-width: 700px; margin: 0 auto; }
+            h1 { font-size: 22px; margin-bottom: 4px; }
+            .meta { color: #6b7280; font-size: 13px; margin-bottom: 24px; }
+            .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+            .cell { background: #f9fafb; border-radius: 8px; padding: 12px; }
+            .cell label { display: block; font-size: 11px; color: #9ca3af; margin-bottom: 4px; }
+            .cell span { font-size: 14px; font-weight: 600; }
+            h2 { font-size: 14px; color: #374151; margin-bottom: 8px; }
+            .desc { background: #f9fafb; border-radius: 8px; padding: 16px; font-size: 14px; line-height: 1.6; min-height: 80px; }
+            .footer { margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 11px; color: #9ca3af; }
+        </style>
+        </head><body>
+        <h1>${i.titulo || '—'}</h1>
+        <p class="meta">Tipo: ${i.tipo || '—'} &nbsp;·&nbsp; ID #${i.id}</p>
+        <div class="grid">
+            <div class="cell"><label>Alumno</label><span>${i.alumno_nombre || '—'}</span></div>
+            <div class="cell"><label>Fecha</label><span>${fecha}</span></div>
+            <div class="cell"><label>Estado</label><span>${(i.estado || '').charAt(0).toUpperCase() + (i.estado || '').slice(1)}</span></div>
+        </div>
+        <h2>Descripción</h2>
+        <div class="desc">${i.descripcion || 'Sin descripción registrada.'}</div>
+        <div class="footer">Sistema PIE Escolar &nbsp;·&nbsp; Impreso el ${new Date().toLocaleDateString('es-CL')}</div>
+        </body></html>
+    `);
+    win.document.close();
+    win.print();
+}
+</script>
 
 <?php include __DIR__ . '/includes/layout_end.php'; ?>
