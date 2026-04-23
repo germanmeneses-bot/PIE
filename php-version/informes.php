@@ -48,7 +48,50 @@ $completados = count(array_filter($informes, fn($i) => $i['estado'] === 'complet
 $borradores  = count(array_filter($informes, fn($i) => $i['estado'] === 'borrador'));
 $pendientes  = count(array_filter($informes, fn($i) => $i['estado'] === 'pendiente'));
 
-$tipos = ['Psicopedagógico', 'Avance', 'PAI', 'Seguimiento', 'Evaluación', 'Derivación'];
+// Definición de tipos con ícono SVG, descripción y color
+$tiposInfo = [
+    'Psicológico' => [
+        'desc'  => 'Evaluación cognitiva, emocional y conductual del estudiante. Incluye aplicación de pruebas psicológicas y análisis integral.',
+        'emoji' => '🧠',
+        'color' => 'indigo',
+    ],
+    'Psicológico Complementario' => [
+        'desc'  => 'Evaluación psicológica complementaria con metodologías especializadas. Análisis cualitativo y cuantitativo adaptado.',
+        'emoji' => '🧠',
+        'color' => 'violet',
+    ],
+    'Terapia Ocupacional' => [
+        'desc'  => 'Evaluación de motricidad, procesamiento sensorial y actividades de la vida diaria. Análisis funcional ocupacional.',
+        'emoji' => '🖐️',
+        'color' => 'amber',
+    ],
+    'Fonoaudiológico' => [
+        'desc'  => 'Evaluación del lenguaje, habla, voz y audición. Análisis de habilidades comunicativas y trastornos del lenguaje.',
+        'emoji' => '🗣️',
+        'color' => 'sky',
+    ],
+    'Psicopedagógico' => [
+        'desc'  => 'Evaluación académica, lectoescritura y matemáticas. Análisis de estrategias de aprendizaje y dificultades educativas.',
+        'emoji' => '📚',
+        'color' => 'emerald',
+    ],
+    'PAI' => [
+        'desc'  => 'Plan de Apoyo Individual. Documento con objetivos, estrategias y apoyos diferenciados para el estudiante.',
+        'emoji' => '📋',
+        'color' => 'teal',
+    ],
+    'Avance' => [
+        'desc'  => 'Seguimiento periódico del progreso académico y funcional del alumno PIE respecto a los objetivos planteados.',
+        'emoji' => '📈',
+        'color' => 'cyan',
+    ],
+    'Derivación' => [
+        'desc'  => 'Solicitud formal de derivación a especialistas externos o internos para atención complementaria del estudiante.',
+        'emoji' => '📤',
+        'color' => 'rose',
+    ],
+];
+$tipos = array_keys($tiposInfo);
 
 $estadoBadge = [
     'completado' => 'bg-emerald-100 text-emerald-700',
@@ -109,11 +152,41 @@ include __DIR__ . '/includes/layout_start.php';
         </div>
     </div>
 
-    <!-- Tipos disponibles -->
-    <div class="flex flex-wrap gap-2">
-        <?php foreach ($tipos as $t): ?>
-        <span class="px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700"><?= h($t) ?></span>
-        <?php endforeach; ?>
+    <!-- Grid de tipos de informe -->
+    <?php
+    $colorMap = [
+        'indigo'  => ['bg' => 'bg-indigo-50',  'icon' => 'bg-indigo-100 text-indigo-600',  'btn' => 'bg-indigo-600 hover:bg-indigo-700',  'border' => 'hover:border-indigo-200'],
+        'violet'  => ['bg' => 'bg-violet-50',  'icon' => 'bg-violet-100 text-violet-600',  'btn' => 'bg-violet-600 hover:bg-violet-700',  'border' => 'hover:border-violet-200'],
+        'amber'   => ['bg' => 'bg-amber-50',   'icon' => 'bg-amber-100 text-amber-600',    'btn' => 'bg-amber-500 hover:bg-amber-600',    'border' => 'hover:border-amber-200'],
+        'sky'     => ['bg' => 'bg-sky-50',     'icon' => 'bg-sky-100 text-sky-600',        'btn' => 'bg-sky-600 hover:bg-sky-700',        'border' => 'hover:border-sky-200'],
+        'emerald' => ['bg' => 'bg-emerald-50', 'icon' => 'bg-emerald-100 text-emerald-600','btn' => 'bg-emerald-600 hover:bg-emerald-700','border' => 'hover:border-emerald-200'],
+        'teal'    => ['bg' => 'bg-teal-50',    'icon' => 'bg-teal-100 text-teal-600',      'btn' => 'bg-teal-600 hover:bg-teal-700',      'border' => 'hover:border-teal-200'],
+        'cyan'    => ['bg' => 'bg-cyan-50',    'icon' => 'bg-cyan-100 text-cyan-600',      'btn' => 'bg-cyan-600 hover:bg-cyan-700',      'border' => 'hover:border-cyan-200'],
+        'rose'    => ['bg' => 'bg-rose-50',    'icon' => 'bg-rose-100 text-rose-600',      'btn' => 'bg-rose-600 hover:bg-rose-700',      'border' => 'hover:border-rose-200'],
+    ];
+    ?>
+    <div>
+        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Tipos de informe disponibles</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <?php foreach ($tiposInfo as $tipo => $info):
+                $c = $colorMap[$info['color']];
+            ?>
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3 transition-all duration-200 <?= $c['border'] ?> hover:shadow-md">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0 <?= $c['icon'] ?>">
+                        <?= $info['emoji'] ?>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 text-sm leading-snug"><?= h($tipo) ?></h4>
+                </div>
+                <p class="text-xs text-gray-500 leading-relaxed flex-1"><?= h($info['desc']) ?></p>
+                <button
+                    onclick="abrirModalConTipo(<?= json_encode($tipo) ?>)"
+                    class="w-full py-2 rounded-lg text-xs font-medium text-white transition-colors cursor-pointer <?= $c['btn'] ?>">
+                    Crear Informe
+                </button>
+            </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <!-- Tabla -->
@@ -268,6 +341,21 @@ document.getElementById('alumno-select').addEventListener('change', function() {
     const opt = this.options[this.selectedIndex];
     document.getElementById('alumno-nombre').value = opt.dataset.nombre || '';
 });
+
+// Abrir modal con tipo preseleccionado
+function abrirModalConTipo(tipo) {
+    // Marcar el radio correspondiente
+    const radios = document.querySelectorAll('input[name="tipo"]');
+    radios.forEach(r => {
+        r.checked = (r.value === tipo);
+    });
+    // Auto-completar título si está vacío
+    const tituloInput = document.querySelector('input[name="titulo"]');
+    if (!tituloInput.value) {
+        tituloInput.value = 'Informe ' + tipo;
+    }
+    document.getElementById('modal-informe').classList.remove('hidden');
+}
 </script>
 
 <?php if ($error || (isset($_GET['action']) && $_GET['action'] === 'nuevo')): ?>
