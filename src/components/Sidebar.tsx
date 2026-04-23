@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
   {
@@ -53,6 +53,13 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/login");
+    router.refresh();
+  }
 
   return (
     <aside className="w-64 min-h-screen bg-indigo-900 text-white flex flex-col shadow-xl">
@@ -99,16 +106,25 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-6 py-4 border-t border-indigo-700">
+      <div className="px-6 py-4 border-t border-indigo-700 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-xs font-bold">
-            MP
+            AD
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium truncate">María Pérez</p>
-            <p className="text-xs text-indigo-400 truncate">Profesora PIE</p>
+            <p className="text-xs font-medium truncate">Administrador</p>
+            <p className="text-xs text-indigo-400 truncate">admin</p>
           </div>
         </div>
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-indigo-300 hover:bg-indigo-800 hover:text-white transition-all duration-200 text-sm cursor-pointer"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );
