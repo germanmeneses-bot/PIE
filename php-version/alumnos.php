@@ -65,7 +65,26 @@ $alumnos = $db->prepare("
 $alumnos->execute($params);
 $alumnos = $alumnos->fetchAll();
 
-$cursos = $db->query("SELECT id, nombre FROM cursos ORDER BY nombre")->fetchAll();
+$cursos = $db->query("
+    SELECT id, nombre FROM cursos
+    ORDER BY CASE nivel
+        WHEN 'Pre-Kinder' THEN 0
+        WHEN 'Kinder'     THEN 1
+        WHEN '1° Básico'  THEN 2
+        WHEN '2° Básico'  THEN 3
+        WHEN '3° Básico'  THEN 4
+        WHEN '4° Básico'  THEN 5
+        WHEN '5° Básico'  THEN 6
+        WHEN '6° Básico'  THEN 7
+        WHEN '7° Básico'  THEN 8
+        WHEN '8° Básico'  THEN 9
+        WHEN 'I Medio'    THEN 10
+        WHEN 'II Medio'   THEN 11
+        WHEN 'III Medio'  THEN 12
+        WHEN 'IV Medio'   THEN 13
+        ELSE 99
+    END, letra
+")->fetchAll();
 
 $necesidades = ['TEA', 'TDAH', 'TEL', 'Dificultad Lectora', 'Discapacidad Motora', 'Discapacidad Visual', 'Otra'];
 

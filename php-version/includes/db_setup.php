@@ -56,22 +56,42 @@ if ((int)$existing['cnt'] === 0) {
     $stmt->execute(['admin', password_hash('admin', PASSWORD_DEFAULT), 'Administrador', 'admin']);
 }
 
-// Seed: cursos
+// Seed: cursos (sistema escolar chileno completo: Pre-Kinder a IV Medio)
 $existingCursos = $db->query("SELECT COUNT(*) as cnt FROM cursos")->fetch();
 if ((int)$existingCursos['cnt'] === 0) {
+    // [nombre, nivel, letra, profesor, total_alumnos]
     $cursos = [
-        ['1° Básico A',  '1° Básico',  'A', 'Ana González',    34, 4],
-        ['1° Básico B',  '1° Básico',  'B', 'Pedro Ramírez',   32, 3],
-        ['2° Básico A',  '2° Básico',  'A', 'Carmen López',    35, 5],
-        ['2° Básico B',  '2° Básico',  'B', 'Jorge Martínez',  33, 4],
-        ['3° Básico A',  '3° Básico',  'A', 'Laura Soto',      36, 5],
-        ['4° Básico A',  '4° Básico',  'A', 'Roberto Silva',   34, 4],
-        ['4° Básico B',  '4° Básico',  'B', 'Alejandra Muñoz', 33, 3],
-        ['5° Básico A',  '5° Básico',  'A', 'Felipe Torres',   35, 4],
-        ['5° Básico B',  '5° Básico',  'B', 'Isabel Herrera',  34, 5],
-        ['6° Básico A',  '6° Básico',  'A', 'Diego Vargas',    36, 3],
-        ['1° Medio A',   '1° Medio',   'A', 'Claudia Reyes',   34, 3],
-        ['2° Medio B',   '2° Medio',   'B', 'Andrés Castro',   33, 3],
+        // Educación Parvularia
+        ['Pre-Kinder A',  'Pre-Kinder',  'A', 'Sofía Andrade',    20],
+        ['Pre-Kinder B',  'Pre-Kinder',  'B', 'Valentina Ríos',   18],
+        ['Kinder A',      'Kinder',      'A', 'Daniela Fuentes',  22],
+        ['Kinder B',      'Kinder',      'B', 'Constanza Mora',   21],
+        // 1° a 8° Básico
+        ['1° Básico A',   '1° Básico',   'A', 'Ana González',     34],
+        ['1° Básico B',   '1° Básico',   'B', 'Pedro Ramírez',    32],
+        ['2° Básico A',   '2° Básico',   'A', 'Carmen López',     35],
+        ['2° Básico B',   '2° Básico',   'B', 'Jorge Martínez',   33],
+        ['3° Básico A',   '3° Básico',   'A', 'Laura Soto',       36],
+        ['3° Básico B',   '3° Básico',   'B', 'Marcela Vega',     34],
+        ['4° Básico A',   '4° Básico',   'A', 'Roberto Silva',    34],
+        ['4° Básico B',   '4° Básico',   'B', 'Alejandra Muñoz',  33],
+        ['5° Básico A',   '5° Básico',   'A', 'Felipe Torres',    35],
+        ['5° Básico B',   '5° Básico',   'B', 'Isabel Herrera',   34],
+        ['6° Básico A',   '6° Básico',   'A', 'Diego Vargas',     36],
+        ['6° Básico B',   '6° Básico',   'B', 'Patricia Núñez',   33],
+        ['7° Básico A',   '7° Básico',   'A', 'Ricardo Espinoza', 38],
+        ['7° Básico B',   '7° Básico',   'B', 'Gloria Pizarro',   37],
+        ['8° Básico A',   '8° Básico',   'A', 'Manuel Contreras', 38],
+        ['8° Básico B',   '8° Básico',   'B', 'Andrea Campos',    36],
+        // I a IV Medio
+        ['I Medio A',     'I Medio',     'A', 'Claudia Reyes',    40],
+        ['I Medio B',     'I Medio',     'B', 'Hernán Salinas',   39],
+        ['II Medio A',    'II Medio',    'A', 'Andrés Castro',    38],
+        ['II Medio B',    'II Medio',    'B', 'Lorena Tapia',     37],
+        ['III Medio A',   'III Medio',   'A', 'Sebastián Rojas',  36],
+        ['III Medio B',   'III Medio',   'B', 'Paola Méndez',     35],
+        ['IV Medio A',    'IV Medio',    'A', 'Cristóbal Aguilar',35],
+        ['IV Medio B',    'IV Medio',    'B', 'Natalia Sánchez',  34],
     ];
     $stmt = $db->prepare("INSERT INTO cursos (nombre, nivel, letra, profesor, total_alumnos) VALUES (?,?,?,?,?)");
     foreach ($cursos as $c) {

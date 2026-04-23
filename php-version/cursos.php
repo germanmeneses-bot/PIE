@@ -4,13 +4,57 @@ requireLogin();
 
 $db = getDB();
 
-$cursos = $db->query("SELECT * FROM cursos ORDER BY nivel, letra")->fetchAll();
+// Orden correcto del sistema escolar chileno
+$ordenNiveles = [
+    'Pre-Kinder' => 0,
+    'Kinder'     => 1,
+    '1° Básico'  => 2,
+    '2° Básico'  => 3,
+    '3° Básico'  => 4,
+    '4° Básico'  => 5,
+    '5° Básico'  => 6,
+    '6° Básico'  => 7,
+    '7° Básico'  => 8,
+    '8° Básico'  => 9,
+    'I Medio'    => 10,
+    'II Medio'   => 11,
+    'III Medio'  => 12,
+    'IV Medio'   => 13,
+];
 
-$totalAlumnos    = array_sum(array_column($cursos, 'total_alumnos'));
-$totalPIE        = $db->query("SELECT COUNT(*) FROM alumnos WHERE estado = 'activo'")->fetchColumn();
-$totalCursos     = count($cursos);
+// Colores por etapa
+$colorNivel = [
+    'Pre-Kinder' => 'bg-pink-100 text-pink-700',
+    'Kinder'     => 'bg-rose-100 text-rose-700',
+    '1° Básico'  => 'bg-sky-100 text-sky-700',
+    '2° Básico'  => 'bg-sky-100 text-sky-700',
+    '3° Básico'  => 'bg-sky-100 text-sky-700',
+    '4° Básico'  => 'bg-sky-100 text-sky-700',
+    '5° Básico'  => 'bg-cyan-100 text-cyan-700',
+    '6° Básico'  => 'bg-cyan-100 text-cyan-700',
+    '7° Básico'  => 'bg-teal-100 text-teal-700',
+    '8° Básico'  => 'bg-teal-100 text-teal-700',
+    'I Medio'    => 'bg-violet-100 text-violet-700',
+    'II Medio'   => 'bg-violet-100 text-violet-700',
+    'III Medio'  => 'bg-purple-100 text-purple-700',
+    'IV Medio'   => 'bg-purple-100 text-purple-700',
+];
 
-// Agrupar por nivel
+$cursos = $db->query("SELECT * FROM cursos ORDER BY nombre")->fetchAll();
+
+// Ordenar por orden de nivel definido, luego por letra
+usort($cursos, function($a, $b) use ($ordenNiveles) {
+    $oa = $ordenNiveles[$a['nivel']] ?? 99;
+    $ob = $ordenNiveles[$b['nivel']] ?? 99;
+    if ($oa !== $ob) return $oa - $ob;
+    return strcmp($a['letra'], $b['letra']);
+});
+
+$totalAlumnos = array_sum(array_column($cursos, 'total_alumnos'));
+$totalPIE     = $db->query("SELECT COUNT(*) FROM alumnos WHERE estado = 'activo'")->fetchColumn();
+$totalCursos  = count($cursos);
+
+// Agrupar por nivel (en orden correcto)
 $porNivel = [];
 foreach ($cursos as $c) {
     $porNivel[$c['nivel']][] = $c;
@@ -80,16 +124,12 @@ include __DIR__ . '/includes/layout_start.php';
         <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3"><?= h($nivel) ?></h3>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <?php foreach ($listaCursos as $c):
-                $pieCount = (int)$db->prepare("SELECT COUNT(*) FROM alumnos WHERE curso_id = ? AND estado = 'activo'")->execute([$c['id']]) ? $db->prepare("SELECT COUNT(*) FROM alumnos WHERE curso_id = ? AND estado = 'activo'")->execute([$c['id']]) : 0;
                 // Contar alumnos PIE de este curso
                 $stmtPie = $db->prepare("SELECT COUNT(*) FROM alumnos WHERE curso_id = ? AND estado = 'activo'");
                 $stmtPie->execute([$c['id']]);
                 $pieCount = (int)$stmtPie->fetchColumn();
 
-                $isBasico = str_contains($c['nivel'], 'Básico');
-                $badgeNivel = $isBasico
-                    ? 'bg-sky-100 text-sky-700'
-                    : 'bg-violet-100 text-violet-700';
+                $badgeNivel = $colorNivel[$c['nivel']] ?? 'bg-gray-100 text-gray-700';
             ?>
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 relative">
                 <!-- Badge PIE -->
