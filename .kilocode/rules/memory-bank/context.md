@@ -114,3 +114,4 @@ export async function GET() {
 | Initial | Template created with base setup |
 | 2026-04-23 | Sistema PIE Escolar completo: sidebar + dashboard + alumnos + cursos + informes + perfil |
 | 2026-04-23 | BD SQLite con Drizzle ORM + autenticación login/logout + middleware de protección de rutas |
+| 2026-09-15 | Video silencioso pupitre inteligente (aula con boche, micrófonos pizarra, ANC, audífono) + página `/pupitre-inteligente` |
