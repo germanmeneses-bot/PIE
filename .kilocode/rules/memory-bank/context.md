@@ -52,7 +52,9 @@ Sistema PIE Escolar completo con login obligatorio (usuario: admin / contraseña
 
 ## Current Focus
 
-Sistema PIE Escolar con autenticación y BD. Próximos pasos:
+Video silencioso del pupitre inteligente (apoyo auditivo en aula) añadido a `public/` y página `/pupitre-inteligente`.
+
+Próximos pasos del sistema PIE:
 1. Conectar formularios de alumnos/cursos/informes a la BD real
 2. Agregar gestión de usuarios desde el panel admin
 3. Mejorar seguridad (hashear contraseñas con bcrypt)

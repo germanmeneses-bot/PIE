@@ -10,7 +10,9 @@ export function middleware(request: NextRequest) {
   if (
     PUBLIC_PATHS.some((p) => pathname.startsWith(p)) ||
     pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon")
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/videos") ||
+    pathname.startsWith("/images")
   ) {
     return NextResponse.next();
   }
