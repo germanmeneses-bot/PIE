@@ -40,12 +40,11 @@ export default function PupitreInteligentePage() {
           Pupitre inteligente
         </h1>
         <p className="text-slate-600 max-w-2xl">
-          Video silencioso (solo imágenes) con movimiento natural de las
-          personas: estudiantes, profesora y la niña con audífono en un aula
-          con mucho boche. Sin efectos 3D artificiales. El pupitre escolar
-          común incorpora micrófono de superficie, paneles microperforados,
-          cancelación de ruido y conexión al audífono, con micrófonos en la
-          pizarra priorizando la voz del profesor.
+          Video silencioso con movimiento continuo tipo grabación en vivo:
+          estudiantes, profesora y la niña con audífono en un aula con mucho
+          boche. El pupitre escolar común incorpora micrófono de superficie,
+          paneles microperforados, cancelación de ruido y conexión al audífono,
+          con micrófonos en la pizarra priorizando la voz del profesor.
         </p>
       </header>
 
@@ -64,7 +63,7 @@ export default function PupitreInteligentePage() {
           </video>
         </div>
         <p className="text-sm text-slate-500">
-          Sin narración hablada · 1920×1080 · movimiento natural de personas
+          Sin narración hablada · 1920×1080 · movimiento continuo (estilo en vivo)
         </p>
       </section>
 
