@@ -4,6 +4,10 @@ const STILLS = [
     alt: "Aula con mucho boche y estudiantes",
   },
   {
+    src: "/images/pupitre-inteligente/09-aula-angulo-dinamico.jpg",
+    alt: "Ángulo dinámico del aula",
+  },
+  {
     src: "/images/pupitre-inteligente/02-pizarra-microfonos.jpg",
     alt: "Micrófonos alrededor de la pizarra",
   },
@@ -12,16 +16,20 @@ const STILLS = [
     alt: "Niña con audífono en el pupitre inteligente",
   },
   {
-    src: "/images/pupitre-inteligente/04-detalle-pupitre.jpg",
-    alt: "Detalle del pupitre: mesa, patas de fierro y micrófono",
+    src: "/images/pupitre-inteligente/10-pupitre-hero-3d.jpg",
+    alt: "Pupitre inteligente en vista 3D",
+  },
+  {
+    src: "/images/pupitre-inteligente/11-haz-3d-comunicacion.jpg",
+    alt: "Haz 3D de comunicación profesor–estudiante",
+  },
+  {
+    src: "/images/pupitre-inteligente/12-audifono-orbit-3d.jpg",
+    alt: "Audífono con ondas en órbita 3D",
   },
   {
     src: "/images/pupitre-inteligente/05-paneles-microperforados.jpg",
     alt: "Paneles microperforados bajo la superficie",
-  },
-  {
-    src: "/images/pupitre-inteligente/06-comunicacion-priorizada.jpg",
-    alt: "Comunicación priorizada profesor–estudiante",
   },
 ];
 
@@ -36,10 +44,11 @@ export default function PupitreInteligentePage() {
           Pupitre inteligente
         </h1>
         <p className="text-slate-600 max-w-2xl">
-          Video silencioso (solo imágenes) de un pupitre escolar común con
-          tecnología de apoyo para estudiantes con discapacidad auditiva:
-          micrófonos en la pizarra, cancelación de ruido activa y conexión
-          directa al audífono, priorizando la voz del profesor en un aula con
+          Video silencioso (solo imágenes) con movimiento de cámara 3D: órbitas,
+          dolly, perspectiva y transiciones dinámicas. Muestra un pupitre escolar
+          común con tecnología de apoyo para estudiantes con discapacidad
+          auditiva — micrófonos en la pizarra, cancelación de ruido activa y
+          conexión al audífono — priorizando la voz del profesor en un aula con
           mucho boche.
         </p>
       </header>
@@ -59,7 +68,7 @@ export default function PupitreInteligentePage() {
           </video>
         </div>
         <p className="text-sm text-slate-500">
-          Sin narración hablada · 26 s · 1920×1080
+          Sin narración hablada · ~35 s · 1920×1080 · movimiento 3D (órbita, dolly, perspectiva)
         </p>
       </section>
 
