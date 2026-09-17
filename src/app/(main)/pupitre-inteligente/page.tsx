@@ -1,35 +1,31 @@
 const STILLS = [
   {
-    src: "/images/pupitre-inteligente/01-aula-boche.jpg",
-    alt: "Aula con mucho boche y estudiantes",
+    src: "/images/pupitre-inteligente/real/real-01a-aula.jpg",
+    alt: "Aula con estudiantes en movimiento natural",
   },
   {
-    src: "/images/pupitre-inteligente/09-aula-angulo-dinamico.jpg",
-    alt: "Ángulo dinámico del aula",
+    src: "/images/pupitre-inteligente/real/real-02a-profe.jpg",
+    alt: "Profesora en la pizarra con micrófonos",
   },
   {
-    src: "/images/pupitre-inteligente/02-pizarra-microfonos.jpg",
-    alt: "Micrófonos alrededor de la pizarra",
+    src: "/images/pupitre-inteligente/real/real-03a-nina.jpg",
+    alt: "Niña con audífono en el pupitre",
   },
   {
-    src: "/images/pupitre-inteligente/03-nina-pupitre.jpg",
-    alt: "Niña con audífono en el pupitre inteligente",
+    src: "/images/pupitre-inteligente/real/real-04a-pupitre.jpg",
+    alt: "Detalle del pupitre y micrófono de superficie",
   },
   {
-    src: "/images/pupitre-inteligente/10-pupitre-hero-3d.jpg",
-    alt: "Pupitre inteligente en vista 3D",
+    src: "/images/pupitre-inteligente/real/real-04b-paneles.jpg",
+    alt: "Paneles microperforados bajo la mesa",
   },
   {
-    src: "/images/pupitre-inteligente/11-haz-3d-comunicacion.jpg",
-    alt: "Haz 3D de comunicación profesor–estudiante",
+    src: "/images/pupitre-inteligente/real/real-05a-audifono.jpg",
+    alt: "Audífono del estudiante",
   },
   {
-    src: "/images/pupitre-inteligente/12-audifono-orbit-3d.jpg",
-    alt: "Audífono con ondas en órbita 3D",
-  },
-  {
-    src: "/images/pupitre-inteligente/05-paneles-microperforados.jpg",
-    alt: "Paneles microperforados bajo la superficie",
+    src: "/images/pupitre-inteligente/real/real-06a-cierre.jpg",
+    alt: "Vista general del aula inclusiva",
   },
 ];
 
@@ -44,12 +40,12 @@ export default function PupitreInteligentePage() {
           Pupitre inteligente
         </h1>
         <p className="text-slate-600 max-w-2xl">
-          Video silencioso (solo imágenes) con movimiento de cámara 3D: órbitas,
-          dolly, perspectiva y transiciones dinámicas. Muestra un pupitre escolar
-          común con tecnología de apoyo para estudiantes con discapacidad
-          auditiva — micrófonos en la pizarra, cancelación de ruido activa y
-          conexión al audífono — priorizando la voz del profesor en un aula con
-          mucho boche.
+          Video silencioso (solo imágenes) con movimiento natural de las
+          personas: estudiantes, profesora y la niña con audífono en un aula
+          con mucho boche. Sin efectos 3D artificiales. El pupitre escolar
+          común incorpora micrófono de superficie, paneles microperforados,
+          cancelación de ruido y conexión al audífono, con micrófonos en la
+          pizarra priorizando la voz del profesor.
         </p>
       </header>
 
@@ -61,14 +57,14 @@ export default function PupitreInteligentePage() {
             controls
             playsInline
             preload="metadata"
-            poster="/images/pupitre-inteligente/01-aula-boche.jpg"
+            poster="/images/pupitre-inteligente/real/real-01a-aula.jpg"
             src="/videos/pupitre-inteligente-aula.mp4"
           >
             Tu navegador no soporta la reproducción de video.
           </video>
         </div>
         <p className="text-sm text-slate-500">
-          Sin narración hablada · ~35 s · 1920×1080 · movimiento 3D (órbita, dolly, perspectiva)
+          Sin narración hablada · 1920×1080 · movimiento natural de personas
         </p>
       </section>
 

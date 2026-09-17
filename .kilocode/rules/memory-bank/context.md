@@ -52,7 +52,7 @@ Sistema PIE Escolar completo con login obligatorio (usuario: admin / contraseña
 
 ## Current Focus
 
-Video silencioso del pupitre inteligente con **movimiento 3D** (órbita, dolly, perspectiva, transiciones dinámicas). Assets en `public/` y página `/pupitre-inteligente`. Script: `scripts/build_pupitre_3d_video.py`.
+Video silencioso del pupitre inteligente con **movimiento natural de personas** (sin efectos 3D). Script: `scripts/build_pupitre_real_motion_video.py`. Página `/pupitre-inteligente`.
 
 Próximos pasos del sistema PIE:
 1. Conectar formularios de alumnos/cursos/informes a la BD real
