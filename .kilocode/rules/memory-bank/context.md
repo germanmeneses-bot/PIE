@@ -52,7 +52,9 @@ Sistema PIE Escolar completo con login obligatorio (usuario: admin / contraseña
 
 ## Current Focus
 
-Sistema PIE Escolar con autenticación y BD. Próximos pasos:
+Video silencioso del pupitre inteligente con **movimiento continuo estilo en vivo** (blends temporales entre poses densas + micro-handheld). Script: `scripts/build_pupitre_live_motion_video.py`. Página `/pupitre-inteligente`.
+
+Próximos pasos del sistema PIE:
 1. Conectar formularios de alumnos/cursos/informes a la BD real
 2. Agregar gestión de usuarios desde el panel admin
 3. Mejorar seguridad (hashear contraseñas con bcrypt)
@@ -112,3 +114,4 @@ export async function GET() {
 | Initial | Template created with base setup |
 | 2026-04-23 | Sistema PIE Escolar completo: sidebar + dashboard + alumnos + cursos + informes + perfil |
 | 2026-04-23 | BD SQLite con Drizzle ORM + autenticación login/logout + middleware de protección de rutas |
+| 2026-09-15 | Video silencioso pupitre inteligente (aula con boche, micrófonos pizarra, ANC, audífono) + página `/pupitre-inteligente` |
