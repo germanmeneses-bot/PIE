@@ -53,7 +53,6 @@ PREFERRED = [
     "01a0eab2-86f1-7aa4-8742-fd11091f1793.jpg",
     "01a0eab2-870c-7446-9d18-76f4d3dac4eb.jpg",
     "01a0eab2-8725-7bc0-84ee-78b141be1d3e.jpg",
-    "01a0eab2-8740-7c79-ad8b-a7fd08a64a80.jpg",
     "01a0eab2-875b-7297-9291-6da03317d2f4.jpg",
     "01a0eab2-8775-7e4f-b5ae-11a05aaf6bf5.jpg",
     "01a0eab2-878f-7125-9778-5421fdd7457e.jpg",
@@ -91,6 +90,7 @@ PREFERRED = [
 
 SKIP = {
     "01a0eab2-8bf5-7e2c-82f0-cf4a15f6f592.jpg",  # watermark FOTOGRAFIA
+    "01a0eab2-8740-7c79-ad8b-a7fd08a64a80.jpg",  # selfie comiendo (~1:02)
 }
 
 
