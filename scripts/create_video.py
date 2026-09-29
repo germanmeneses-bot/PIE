@@ -36,77 +36,22 @@ TRANSITIONS = [
     "distance",
 ]
 
-# Prefer narrative order; remaining assets appended alphabetically
-PREFERRED = [
-    # Aula
-    "01a0eab2-85c9-73ab-b214-5d4b766207d5.jpg",
-    "01a0eab2-85e4-7be8-848a-388e8881445d.jpg",
-    "01a0eab2-85fd-7f82-a7cb-56552fe45409.jpg",
-    "01a0eab2-8617-7c3d-870a-58dc77143cd9.jpg",
-    "01a0eab2-8631-7165-bcc9-4127e64d6040.jpg",
-    "01a0eab2-8665-7830-8715-186017981699.jpg",
-    "01a0eab2-8682-7b17-9dac-339014dba88a.jpg",
-    "01a0eab2-869d-7258-a49c-c00a33186122.jpg",
-    "01a0eab2-86b9-72db-85a0-e42c68a6e0ac.jpg",
-    "01a0eab2-86d5-7eb5-9963-385a0da4ab2b.jpg",
-    "01a0eab2-86f1-7aa4-8742-fd11091f1793.jpg",
-    "01a0eab2-870c-7446-9d18-76f4d3dac4eb.jpg",
-    "01a0eab2-8725-7bc0-84ee-78b141be1d3e.jpg",
-    "01a0eab2-875b-7297-9291-6da03317d2f4.jpg",
-    "01a0eab2-8775-7e4f-b5ae-11a05aaf6bf5.jpg",
-    "01a0eab2-878f-7125-9778-5421fdd7457e.jpg",
-    # Comunidad / naturaleza
-    "01a0eab2-881a-7178-96ae-50847d1ed912.jpg",
-    "01a0eab2-88a2-7bcd-9156-eddbfcb33d01.jpg",
-    "01a0eab2-88c7-7f75-a913-21b313673bac.jpg",
-    "01a0eab2-894a-7958-ae1b-7d15343791b4.jpg",
-    "01a0eab2-89d3-7e53-9768-e57a43c5c752.jpg",
-    "01a0eab2-8a5e-77fd-8222-619bcf7a4b7b.jpg",
-    "01a0eab2-8ae2-782e-b37b-54c43a018f7d.jpg",
-    "01a0eab2-8b69-7dc7-89b8-3e4be346787a.jpg",
-    "01a0eab2-8bd2-796c-9323-b35de2e91ee4.jpg",
-    "01a0eab2-8c8d-7711-bcd4-57d5c92264c0.jpg",
-    # Tradición Mapuche
-    "01a0eab2-8c13-7ebd-9cfe-44e2722a8adc.jpg",
-    "01a0eab2-8c32-7c1f-b31f-24fbdd46ad6e.jpg",
-    "01a0eab2-8c51-72de-99a0-3497b84a1737.jpg",
-    "01a0eab2-8c6f-7194-90c7-4201bb02fd8e.jpg",
-    # Visita Escuela Chacaico
-    "01a0eab2-8d05-7502-834f-ad9413437047.jpg",
-    "01a0eab2-8d65-7205-bf53-b393da08b94e.jpg",
-    "01a0eab2-8ddb-7d00-8470-3046ca34902b.jpg",
-    "01a0eab2-8e4d-79f5-b292-a7f63e15d2c1.jpg",
-    "01a0eab2-8ebe-79a4-b874-e1b7b7265977.jpg",
-    "01a0eab2-8f31-76a8-a8c6-e0c59b450b6c.jpg",
-    "01a0eab2-8f9e-7eab-99ca-51f774e41cd2.jpg",
-    "01a0eab2-900d-76dd-b106-efcc95a8a809.jpg",
-    "01a0eab2-9073-7650-9d0c-fe61eda37fc8.jpg",
-    "01a0eab2-90dc-708b-ac51-2136ba45c04f.jpg",
-    # Aprendizaje Mapudungun
-    "01a0eab2-914f-721e-80e9-d4341f6da5cd.jpg",
-    "01a0eab2-91c9-7202-af38-962a1ec100a0.jpg",
-]
+# Only use the newly uploaded batch (prefix 01a0eeb0-)
+PHOTO_GLOB = "01a0eeb0-*.jpg"
 
 SKIP = {
-    "01a0eab2-8bf5-7e2c-82f0-cf4a15f6f592.jpg",  # watermark FOTOGRAFIA
-    "01a0eab2-8740-7c79-ad8b-a7fd08a64a80.jpg",  # selfie comiendo (~1:02)
-    "01a0eab2-864b-7bba-a396-96202b1de5f6.jpg",  # misma selfie comiendo (duplicado)
+    "01a0eeb0-9aee-7129-ac5c-0a3b057e73ae.jpg",  # watermark FOTOGRAFIA
+    "01a0eeb0-92a9-7430-8b17-6565d694fc21.jpg",  # dup. FOTOGRAFIA
+    "01a0eeb0-96db-7982-bca4-759d3f698ad2.jpg",  # adultos comiendo al fondo
+    "01a0eeb0-96bd-7657-85c5-e2f353204851.jpg",  # adulto comiendo al fondo
 }
 
 
 def select_photos() -> list[str]:
-    available = {p.name for p in ASSETS.glob("*.jpg")} - SKIP
-    ordered: list[str] = []
-    seen: set[str] = set()
-    for name in PREFERRED:
-        if name in available and name not in seen:
-            ordered.append(name)
-            seen.add(name)
-    for name in sorted(available):
-        if name not in seen:
-            ordered.append(name)
-            seen.add(name)
-    return ordered
+    photos = sorted(p.name for p in ASSETS.glob(PHOTO_GLOB) if p.name not in SKIP)
+    if not photos:
+        raise SystemExit(f"No photos found matching {PHOTO_GLOB} in {ASSETS}")
+    return photos
 
 
 def letterbox(img: Image.Image) -> Image.Image:

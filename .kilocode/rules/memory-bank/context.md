@@ -8,7 +8,7 @@ Sistema PIE Escolar completo con login obligatorio (usuario: admin / contraseña
 
 ## Recently Completed
 
-- [x] Memoria visual Escuela Chacaico: portada JPG + video MP4 con transiciones (`media/`, scripts en `scripts/`)
+- [x] Memoria visual Escuela Chacaico: portada + video 3:00 con lote fotos `01a0eeb0-*`, audio Poyenekayan (`media/`, `scripts/`)
 - [x] Base Next.js 16 setup with App Router
 - [x] TypeScript configuration with strict mode
 - [x] Tailwind CSS 4 integration

@@ -12,12 +12,12 @@ OUT = Path("/workspace/media/portada-escuela-chacaico.jpg")
 W, H = 1920, 1080
 
 # Strong cultural portrait — boy in yellow makuñ (landscape)
-HERO = ASSETS / "01a0eab2-8c51-72de-99a0-3497b84a1737.jpg"
+HERO = ASSETS / "01a0eeb0-9c7e-7a9b-90f4-739da6d2f983.jpg"
 # Accent strip photos
 ACCENTS = [
-    ASSETS / "01a0eab2-8c13-7ebd-9cfe-44e2722a8adc.jpg",  # girl with kultrun
-    ASSETS / "01a0eab2-8c6f-7194-90c7-4201bb02fd8e.jpg",  # palín dance
-    ASSETS / "01a0eab2-91c9-7202-af38-962a1ec100a0.jpg",  # Mapudungun class
+    ASSETS / "01a0eeb0-9420-7f1a-9016-75669cb6a8eb.jpg",  # kultrun / escenario
+    ASSETS / "01a0eeb0-975e-78a5-b077-747634c237f5.jpg",  # palín / bandera
+    ASSETS / "01a0eeb0-9983-778f-9a1f-147d1f63800f.jpg",  # Mapudungun class
 ]
 
 
