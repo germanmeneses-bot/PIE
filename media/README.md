@@ -12,14 +12,7 @@ Portada y video con transiciones generados a partir de las fotos de la visita / 
 
 ## Regenerar
 
-```bash
-python3 scripts/create_portada.py
-python3 scripts/create_video.py
-```
-
-Requisitos: Python 3 + Pillow, `ffmpeg`.
-
-Las fotos fuente son el lote `01a0eeb0-*.jpg` en la carpeta de assets del entorno.
+Requisitos: Python 3 + Pillow, `ffmpeg`. Fotos: lote `01a0eeb0-*.jpg` en assets.
 
 ```bash
 python3 scripts/create_portada.py
