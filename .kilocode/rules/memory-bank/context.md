@@ -8,6 +8,7 @@ Sistema PIE Escolar completo con login obligatorio (usuario: admin / contraseña
 
 ## Recently Completed
 
+- [x] Memoria visual Escuela Chacaico: portada JPG + video MP4 con transiciones (`media/`, scripts en `scripts/`)
 - [x] Base Next.js 16 setup with App Router
 - [x] TypeScript configuration with strict mode
 - [x] Tailwind CSS 4 integration
@@ -109,6 +110,7 @@ export async function GET() {
 
 | Date | Changes |
 |------|---------|
+| 2026-09-29 | Portada y video con transiciones (Escuela Chacaico / Angol) en `media/` |
 | Initial | Template created with base setup |
 | 2026-04-23 | Sistema PIE Escolar completo: sidebar + dashboard + alumnos + cursos + informes + perfil |
 | 2026-04-23 | BD SQLite con Drizzle ORM + autenticación login/logout + middleware de protección de rutas |
