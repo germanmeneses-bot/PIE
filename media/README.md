@@ -7,7 +7,8 @@ Portada y video con transiciones generados a partir de las fotos de la visita / 
 | Archivo | Descripción |
 |---------|-------------|
 | `portada-escuela-chacaico.jpg` | Portada 1920×1080 |
-| `video-escuela-chacaico.mp4` | Montaje **3:00** con transiciones (xfade), 44 fotos + portada |
+| `video-escuela-chacaico.mp4` | Montaje **3:00** con transiciones + audio *Poyenekayan* (Beatriz Pichi Malen) |
+| `poyenekayan-beatriz-pichi-malen.mp3` | Pista de audio usada en el video |
 
 ## Regenerar
 
